@@ -10,7 +10,7 @@ class Bishop:public Chessman
         char namad='B';
         int warn=2;
         int point=8;
-        bool AreSquaresLegal(int,int,int,int,Chessman* x[8][8]);
+        bool AreSquaresLegal(int,int,int,int);
 };
 
     
