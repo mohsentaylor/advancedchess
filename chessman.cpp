@@ -27,15 +27,6 @@ void Chessman::SetParameter(int x,int y,char color)
     this->y=y;
     this->color=color;
 }
-bool Chessman::IsLegalMove(int iSrcRow, int iSrcCol, int iDestRow, int iDestCol, Chessman* cellsBoard[8][8])
-{
-    Chessman* qpDest = cellsBoard[iDestRow][iDestCol];
-	if ((qpDest == 0) || (color != qpDest->GetColor())) 
-    {
-        return AreSquaresLegal(iSrcRow, iSrcCol, iDestRow, iDestCol,cellsBoard);
-	}
-	return false;
-}
 char Chessman::GetNamad()
 {
     return namad;

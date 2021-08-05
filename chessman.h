@@ -1,9 +1,11 @@
 #ifndef Chessman_H
 #define Chessman_H
-
 #include <iostream>
 #include <string>
-
+struct pos{
+    int x;
+    int y;
+};
 class Chessman
 {
     protected:
@@ -12,11 +14,12 @@ class Chessman
         bool InGame=true;
         int point;
         int warn;
-        virtual bool AreSquaresLegal(int a,int  b,int c,int  d,Chessman * cellsBoard[8][8]) = 0;
+
     public:
         Chessman(int,int,char);
         Chessman();
         ~Chessman();
+        virtual bool AreSquaresLegal(int a,int  b,int c,int  d) = 0;
         void SetParameter(int,int,char);
         bool GetInGame();
         void SetInGame(bool);
@@ -24,7 +27,6 @@ class Chessman
         char GetColor();
         int GetPoint();
         int GetWarn();
-        bool IsLegalMove(int iSrcRow, int iSrcCol, int iDestRow, int iDestCol, Chessman* qpaaBoard[8][8]);
         unsigned int x;
         unsigned int y;
 };
