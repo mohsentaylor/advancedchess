@@ -2,7 +2,7 @@
 Knight::Knight(int a,int b,char x):Chessman(a,b,x)
 {   
 }
-bool Knight::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol)
+bool Knight::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cell *cellBoard[8][8])
 {
     // Destination square is unoccupied or occupied by opposite color
     if ((iSrcCol == iDestCol + 1) || (iSrcCol == iDestCol - 1)) 

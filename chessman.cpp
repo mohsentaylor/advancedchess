@@ -5,7 +5,14 @@ Chessman::Chessman(int x,int y,char color)
     this->y=y;
     this->color=color;
 }
-
+bool Chessman::IsLegalMove(int iSrcRow, int iSrcCol, int iDestRow, int iDestCol, Cell* qpaaBoard[8][8]) {
+    Cell* qpDest = qpaaBoard[iDestRow][iDestCol];
+    if ((qpDest == 0) || (color != qpDest->ptr->GetColor()))
+    {
+        return AreSquaresLegal(iSrcRow, iSrcCol, iDestRow, iDestCol, qpaaBoard);
+    }
+    return false;
+}
 Chessman::Chessman() {
 
 }

@@ -2,10 +2,7 @@
 #define Chessman_H
 #include <iostream>
 #include <string>
-struct pos{
-    int x;
-    int y;
-};
+#include "Cell.h"
 class Chessman
 {
     protected:
@@ -19,7 +16,8 @@ class Chessman
         Chessman(int,int,char);
         Chessman();
         ~Chessman();
-        virtual bool AreSquaresLegal(int a,int  b,int c,int  d) = 0;
+        bool IsLegalMove(int iSrcRow, int iSrcCol, int iDestRow, int iDestCol, Cell* [8][8]);
+        virtual bool AreSquaresLegal(int a,int  b,int c,int  d ,Cell* [8][8]) = 0;
         void SetParameter(int,int,char);
         bool GetInGame();
         void SetInGame(bool);
@@ -27,6 +25,7 @@ class Chessman
         char GetColor();
         int GetPoint();
         int GetWarn();
+        bool DidMove;
         unsigned int x;
         unsigned int y;
 };

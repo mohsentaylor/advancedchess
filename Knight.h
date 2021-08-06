@@ -10,7 +10,7 @@ class Knight:public Chessman
         char namad='H';
         int warn=2;
         int point=8;
-        bool AreSquaresLegal(int,int,int,int);
+        bool AreSquaresLegal(int,int,int,int,Cell *[8][8]);
 };
 
     

@@ -40,6 +40,7 @@ class Player2
         Pawn pawn7;
         Pawn pawn8;
         std::vector <std::string>stack;
+        std::vector <Chessman*> graveyard;
         ~Player2();
 };
 

@@ -2,45 +2,64 @@
 Pawn::Pawn(int a,int b,char x):Chessman(a,b,x)
 {   
 }
-bool Pawn::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol)
+bool Pawn::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cell *cellBoard[8][8])
 {
-			// Destination square is unoccupied
-			if (iSrcCol == iDestCol) 
+    Cell* qpDest = cellBoard[iDestRow][iDestCol];
+            if (qpDest == 0)
             {
-				if (GetColor() == 'W') 
+                // Destination square is unoccupied
+                if (iSrcCol == iDestCol)
                 {
-					if (iDestRow == iSrcRow + 1) 
+                    if (GetColor() == 'W')
                     {
-						return true;
-					}
-				} 
-                else 
-                {
-					if (iDestRow == iSrcRow - 1) 
+                        if (iDestRow == iSrcRow + 1)
+                        {
+                            DidMove=true;
+                            return true;
+                        }
+                        if (iDestRow == iSrcRow + 2 && !DidMove)
+                        {
+                            DidMove=true;
+                            return true;
+                        }
+                    }
+                    else
                     {
-						return true;
-					}
-				}
-			}
-			// Dest holds piece of opposite color
-			if ((iSrcCol == iDestCol + 1) || (iSrcCol == iDestCol - 1)) 
+                        if (iDestRow == iSrcRow - 1)
+                        {
+                            DidMove=true;
+                            return true;
+                        }
+                        if (iDestRow == iSrcRow - 2 && !DidMove)
+                        {
+                            DidMove=true;
+                            return true;
+                        }
+                    }
+                }
+            }
+            else
             {
-				if (GetColor() == 'W') 
+                // Dest holds piece of opposite color
+                if ((iSrcCol == iDestCol + 1) || (iSrcCol == iDestCol - 1))
                 {
-					if (iDestRow == iSrcRow + 1) 
+                    if (GetColor() == 'W')
                     {
-						return true;
-					}
-				} 
-                else 
-                {
-					if (iDestRow == iSrcRow - 1) 
+                        if (iDestRow == iSrcRow + 1)
+                        {
+                            DidMove=true;
+                            return true;
+                        }
+                    }
+                    else
                     {
-						return true;
-					}
-				}
-			}
-
-		return false;
-	
+                        if (iDestRow == iSrcRow - 1)
+                        {
+                            DidMove=true;
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
 }
