@@ -1,13 +1,17 @@
 #include "Queen.h"
-Queen::Queen(int a,int b,char x):Chessman(a,b,x)
-{   
+Queen::Queen(sf::Vector2i pos,sf::RenderWindow *s,char x):Chessman(pos,s,x)
+{
+    if(x=='w')
+    {
+        texture.loadFromFile("/Users/Taylor1989/Desktop/advancedchess/project/White/Queen.png");
+    }
+    else
+    {
+        texture.loadFromFile("/Users/Taylor1989/Desktop/advancedchess/project/Black/Queen.png");
+    }
+    TextureSprite.setTexture(texture);
 }
-
-Queen::Queen() {
-
-}
-
-
+Queen::Queen() {}
 bool Queen::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cell *cellBoard[8][8])
 {
     if (iSrcRow == iDestRow)
@@ -54,3 +58,4 @@ bool Queen::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Ce
     }
     return false;
 }
+
