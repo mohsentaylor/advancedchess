@@ -1,23 +1,40 @@
 #include "Player1.h"
 #include <string>
-Player1::Player1()
+Player1::Player1(sf::RenderWindow * window)
 {
-    queen.SetParameter(0,4,'w');
-    king.SetParameter(0,3,'w');
-    rook1.SetParameter(0,0,'w');
-    rook2.SetParameter(0,7,'w');
-    knight1.SetParameter(0,1,'w');
-    knight2.SetParameter(0,6,'w');
-    bishop1.SetParameter(0,2,'w');
-    bishop2.SetParameter(0,5,'w');
-    pawn1.SetParameter(1,0,'w');
-    pawn2.SetParameter(1,1,'w');
-    pawn3.SetParameter(1,2,'w');
-    pawn4.SetParameter(1,3,'w');
-    pawn5.SetParameter(1,4,'w');
-    pawn6.SetParameter(1,5,'w');
-    pawn7.SetParameter(1,6,'w');
-    pawn8.SetParameter(1,7,'w');
+    queen =new Queen(sf::Vector2i(0,4),window,'w');
+    king=new King(sf::Vector2i(0,3),window,'w');
+    rook1=new Rook(sf::Vector2i(0,0),window,'w');
+    rook2=new Rook(sf::Vector2i(0,7),window,'w');
+    knight1=new Knight(sf::Vector2i(0,1),window,'w');
+    knight2=new Knight(sf::Vector2i(0,6),window,'w');
+    bishop1=new Bishop(sf::Vector2i(0,2),window,'w');
+    bishop2=new Bishop(sf::Vector2i(0,5),window,'w');
+    pawn1=new Pawn(sf::Vector2i(1,0),window,'w');
+    pawn2=new Pawn(sf::Vector2i(1,1),window,'w');
+    pawn3=new Pawn(sf::Vector2i(1,2),window,'w');
+    pawn4=new Pawn(sf::Vector2i(1,3),window,'w');
+    pawn5=new Pawn(sf::Vector2i(1,4),window,'w');
+    pawn6=new Pawn(sf::Vector2i(1,5),window,'w');
+    pawn7=new Pawn(sf::Vector2i(1,6),window,'w');
+    pawn8=new Pawn(sf::Vector2i(1,7),window,'w');
+    pieces.push_back(queen );
+    pieces.push_back(king );
+    pieces.push_back(rook1 );
+    pieces.push_back(rook2 );
+    pieces.push_back(knight1 );
+    pieces.push_back(knight2);
+    pieces.push_back(bishop1);
+    pieces.push_back(bishop2);
+    pieces.push_back(pawn1);
+    pieces.push_back(pawn2);
+    pieces.push_back(pawn3);
+    pieces.push_back(pawn4);
+    pieces.push_back(pawn5);
+    pieces.push_back(pawn6);
+    pieces.push_back(pawn7);
+    pieces.push_back(pawn8);
+    this->window=window;
 }
 void Player1::SetName(std::string name)
 {
@@ -45,4 +62,24 @@ short int Player1::GetNPoint()
 }
 Player1::~Player1()
 {
+    delete king;
+    delete queen;
+    delete rook1;
+    delete rook2;
+    delete knight1;
+    delete knight2;
+    delete bishop1;
+    delete bishop2;
+    delete pawn1;
+    delete pawn2;
+    delete pawn3;
+    delete pawn4;
+    delete pawn5;
+    delete pawn6;
+    delete pawn7;
+    delete pawn8;
+}
+std::vector <Chessman *>&Player1::getPieces()
+{
+    return pieces;
 }

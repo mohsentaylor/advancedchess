@@ -1,6 +1,15 @@
 #include "Bishop.h"
-Bishop::Bishop(int a,int b,char x):Chessman(a,b,x)
-{   
+Bishop::Bishop(sf::Vector2i pos,sf::RenderWindow* s,char x):Chessman(pos,s,x)
+{
+    if(x=='w')
+    {
+        texture.loadFromFile("/Users/Taylor1989/Desktop/advancedchess/project/White/Bishop.png");
+    }
+    else
+    {
+        texture.loadFromFile("/Users/Taylor1989/Desktop/advancedchess/project/Black/Bishop.png");
+    }
+    TextureSprite.setTexture(texture);
 }
 bool Bishop::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cell *cellBoard[8][8])
 {
@@ -22,4 +31,7 @@ bool Bishop::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,C
     }
     return false;
 }
+Bishop::~Bishop()
+{
 
+}

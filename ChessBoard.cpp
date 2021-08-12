@@ -2,48 +2,50 @@
 #include <string>
 #include "ChessBoard.h"
 
-ChessBoard::ChessBoard()
+ChessBoard::ChessBoard(sf::RenderWindow * window)
 {
-
+    this->window=window;
+    pl1=new Player1(this->window);
+    pl2=new Player2(this->window);
     //set pl1 nuts
-    cells[0][4]->SetNut(&pl1.queen);
-    cells[0][3]->SetNut(&pl1.king);
-    cells[0][0]->SetNut(&pl1.rook1);
-    cells[0][7]->SetNut(&pl1.rook2);
-    cells[0][1]->SetNut(&pl1.knight1);
-    cells[0][6]->SetNut(&pl1.knight2);
-    cells[0][2]->SetNut(&pl1.bishop1);
-    cells[0][5]->SetNut(&pl1.bishop2);
-    cells[1][0]->SetNut(&pl1.pawn1);
-    cells[1][1]->SetNut(&pl1.pawn2);
-    cells[1][2]->SetNut(&pl1.pawn3);
-    cells[1][3]->SetNut(&pl1.pawn4);
-    cells[1][4]->SetNut(&pl1.pawn5);
-    cells[1][5]->SetNut(&pl1.pawn6);
-    cells[1][6]->SetNut(&pl1.pawn7);
-    cells[1][7]->SetNut(&pl1.pawn8);
+    cells[0][4]->SetNut(pl1->queen);
+    cells[0][3]->SetNut(pl1->king);
+    cells[0][0]->SetNut(pl1->rook1);
+    cells[0][7]->SetNut(pl1->rook2);
+    cells[0][1]->SetNut(pl1->knight1);
+    cells[0][6]->SetNut(pl1->knight2);
+    cells[0][2]->SetNut(pl1->bishop1);
+    cells[0][5]->SetNut(pl1->bishop2);
+    cells[1][0]->SetNut(pl1->pawn1);
+    cells[1][1]->SetNut(pl1->pawn2);
+    cells[1][2]->SetNut(pl1->pawn3);
+    cells[1][3]->SetNut(pl1->pawn4);
+    cells[1][4]->SetNut(pl1->pawn5);
+    cells[1][5]->SetNut(pl1->pawn6);
+    cells[1][6]->SetNut(pl1->pawn7);
+    cells[1][7]->SetNut(pl1->pawn8);
     //set pl2 nuts
-    cells[7][4]->SetNut(&pl1.queen);
-    cells[7][3]->SetNut(&pl1.king);
-    cells[7][0]->SetNut(&pl1.rook1);
-    cells[7][7]->SetNut(&pl1.rook2);
-    cells[7][1]->SetNut(&pl1.knight1);
-    cells[7][6]->SetNut(&pl1.knight2);
-    cells[7][2]->SetNut(&pl1.bishop1);
-    cells[7][5]->SetNut(&pl1.bishop2);
-    cells[6][0]->SetNut(&pl1.pawn1);
-    cells[6][1]->SetNut(&pl1.pawn2);
-    cells[6][2]->SetNut(&pl1.pawn3);
-    cells[6][3]->SetNut(&pl1.pawn4);
-    cells[6][4]->SetNut(&pl1.pawn5);
-    cells[6][5]->SetNut(&pl1.pawn6);
-    cells[6][6]->SetNut(&pl1.pawn7);
-    cells[6][7]->SetNut(&pl1.pawn8);
+    cells[7][4]->SetNut(pl2->queen);
+    cells[7][3]->SetNut(pl2->king);
+    cells[7][0]->SetNut(pl2->rook1);
+    cells[7][7]->SetNut(pl2->rook2);
+    cells[7][1]->SetNut(pl2->knight1);
+    cells[7][6]->SetNut(pl2->knight2);
+    cells[7][2]->SetNut(pl2->bishop1);
+    cells[7][5]->SetNut(pl2->bishop2);
+    cells[6][0]->SetNut(pl2->pawn1);
+    cells[6][1]->SetNut(pl2->pawn2);
+    cells[6][2]->SetNut(pl2->pawn3);
+    cells[6][3]->SetNut(pl2->pawn4);
+    cells[6][4]->SetNut(pl2->pawn5);
+    cells[6][5]->SetNut(pl2->pawn6);
+    cells[6][6]->SetNut(pl2->pawn7);
+    cells[6][7]->SetNut(pl2->pawn8);
 }
 void ChessBoard::SetPlNames(std::string a,std::string b)
 {
-    pl1.SetName(a);
-    pl2.SetName(b);
+    pl1->SetName(a);
+    pl2->SetName(b);
 }
 void ChessBoard::ChangeTurn()
 {
@@ -63,6 +65,7 @@ void ChessBoard::Moveit(int a,int b,int c, int d)
 {
 
     cells[c][d]->ptr=cells[a][b]->ptr;
+    cells[c][d]->ptr->PosOnGrid=cells[a][b]->ptr->PosOnGrid;
     cells[a][b]->ptr=0;
     if(cells[c][d]->ptr->GetNamad()=='P')
     {
@@ -70,7 +73,7 @@ void ChessBoard::Moveit(int a,int b,int c, int d)
         {
             if(d==4)
             {
-                pl1.AddPoint(3);
+                pl1->AddPoint(3);
             }
             if(d==7)
             {
@@ -81,7 +84,7 @@ void ChessBoard::Moveit(int a,int b,int c, int d)
         {
             if(d==3)
             {
-                pl2.AddPoint(3);
+                pl2->AddPoint(3);
             }
             if(d==0)
             {
@@ -97,11 +100,11 @@ void ChessBoard::Moveit(int a,int b,int c, int d)
             {
                  if(cells[c][d]->ptr->GetColor()=='w')
                  {
-                     pl1.AddPoint(cells[i][j]->ptr->GetWarn());
+                     pl1->AddPoint(cells[i][j]->ptr->GetWarn());
                  }
                  else
                  {
-                     pl2.AddPoint(cells[i][j]->ptr->GetWarn());
+                     pl2->AddPoint(cells[i][j]->ptr->GetWarn());
                  }
             }
         }
@@ -110,11 +113,11 @@ void ChessBoard::Moveit(int a,int b,int c, int d)
     {
         if(plturn == 'w')
         {
-            pl1.AddNPoint(-30);
+            pl1->AddNPoint(-30);
         }
         else
         {
-            pl2.AddNPoint(-30);
+            pl2->AddNPoint(-30);
         }
     }
     else
@@ -122,19 +125,21 @@ void ChessBoard::Moveit(int a,int b,int c, int d)
         ChangeTurn();
     }
 
+
 }
 void ChessBoard::attack(int a, int b, int c, int d)
 {
     if(cells[c][d]->ptr->GetColor()=='w')
     {
-        pl2.AddPoint(cells[c][d]->ptr->GetPoint());
-        pl1.graveyard.push_back(cells[c][d]->ptr);
+        pl2->AddPoint(cells[c][d]->ptr->GetPoint());
+        pl1->graveyard.push_back(cells[c][d]->ptr);
     }
     else
     {
-        pl1.AddPoint(cells[c][d]->ptr->GetPoint());
-        pl2.graveyard.push_back(cells[c][d]->ptr);
+        pl1->AddPoint(cells[c][d]->ptr->GetPoint());
+        pl2->graveyard.push_back(cells[c][d]->ptr);
     }
+    cells[c][d]->ptr->SetInGame(false);
     cells[c][d]->ptr=0;
     Moveit(a,b,c,d);
 
@@ -209,11 +214,11 @@ bool ChessBoard::GameOver()
     }
     if(plturn=='w')
     {
-        pl2.AddPoint(70);
+        pl2->AddPoint(70);
     }
     else
     {
-        pl1.AddPoint(70);
+        pl1->AddPoint(70);
     }
     return false;
 }
@@ -362,7 +367,7 @@ void ChessBoard::movePiece(std::string move)
                         {
                             Moveit(a-1,b-1,c-1,d-1);
                         }
-                        pl1.stack.push_back(switchname(move));
+                        pl1->stack.push_back(switchname(move));
                     }
                     else
 
@@ -400,7 +405,7 @@ void ChessBoard::movePiece(std::string move)
                         {
                             Moveit(a-1,b-1,c-1,d-1);
                         }
-                        pl1.stack.push_back(switchname(move));
+                        pl1->stack.push_back(switchname(move));
                     }
                     else
 
@@ -426,7 +431,121 @@ void ChessBoard::movePiece(std::string move)
             }
 
 }
+void ChessBoard::draw()
+{
+    for(int i=0;i<8;i++)
+    {
+        for(int j=0;j<8;j++)
+        {
+            cells[i][j]->ptr->draw();
+        }
+    }
+}
+bool ChessBoard::transformator(sf::Vector2f pos1,sf::Vector2f pos2)
+{
+    char a,b,c,d,e;
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            if (cells[i][j]->ptr->GetTextureSprite().getGlobalBounds().contains(pos1))
+            {
+                if(cells[i][j]->ptr->GetColor()==plturn)
+                {
+                    a=cells[i][j]->ptr->GetNamad();
+                    c=(char)(j+1);
+                    switch (i+1)
+                    {
+                        case 1:
+                            b='a';
+                            break;
+                        case 2:
+                            b='b';
+                            break;
+                        case 3:
+                            b='c';
+                            break;
+                        case 4:
+                            b='d';
+                            break;
+                        case 5:
+                            b='e';
+                            break;
+                        case 6:
+                            b='f';
+                            break;
+                        case 7:
+                            b='g';
+                            break;
+                        case 8:
+                            b='h';
+                            break;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
 
+            }
+        }
+    }
+    ////////////////
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            if (cells[i][j]->ptr->GetTextureSprite().getGlobalBounds().contains(pos2))
+            {
+                if(cells[i][j]->ptr->GetColor()==plturn)
+                {
+                    e=(char)(j+1);
+                    switch (i+1)
+                    {
+                        case 1:
+                            d='a';
+                            break;
+                        case 2:
+                            d='b';
+                            break;
+                        case 3:
+                            d='c';
+                            break;
+                        case 4:
+                            d='d';
+                            break;
+                        case 5:
+                            d='e';
+                            break;
+                        case 6:
+                            d='f';
+                            break;
+                        case 7:
+                            d='g';
+                            break;
+                        case 8:
+                            d='h';
+                            break;
+                    }
+                }
+                else
+
+                {
+                    return false;
+                }
+
+            }
+        }
+    }
+    std::string name22="";
+    name22=+a;
+    name22=+b;
+    name22=+c;
+    name22=+d;
+    name22=+e;
+    movePiece(name22);
+    return true;
+}
 ChessBoard::~ChessBoard()
 {
 }

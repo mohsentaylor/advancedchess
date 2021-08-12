@@ -1,6 +1,15 @@
 #include "Pawn.h"
-Pawn::Pawn(int a,int b,char x):Chessman(a,b,x)
-{   
+Pawn::Pawn(sf::Vector2i pos,sf::RenderWindow *s,char x):Chessman(pos,s,x)
+{
+    if(x=='w')
+    {
+        texture.loadFromFile("/Users/Taylor1989/Desktop/advancedchess/project/White/Pawn.png");
+    }
+    else
+    {
+        texture.loadFromFile("/Users/Taylor1989/Desktop/advancedchess/project/Black/Pawn.png");
+    }
+    TextureSprite.setTexture(texture);
 }
 bool Pawn::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cell *cellBoard[8][8])
 {
@@ -10,7 +19,7 @@ bool Pawn::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cel
                 // Destination square is unoccupied
                 if (iSrcCol == iDestCol)
                 {
-                    if (GetColor() == 'W')
+                    if (GetColor() == 'w')
                     {
                         if (iDestRow == iSrcRow + 1)
                         {
@@ -43,7 +52,7 @@ bool Pawn::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cel
                 // Dest holds piece of opposite color
                 if ((iSrcCol == iDestCol + 1) || (iSrcCol == iDestCol - 1))
                 {
-                    if (GetColor() == 'W')
+                    if (GetColor() == 'w')
                     {
                         if (iDestRow == iSrcRow + 1)
                         {
@@ -63,3 +72,4 @@ bool Pawn::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cel
             }
             return false;
 }
+

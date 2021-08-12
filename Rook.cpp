@@ -1,6 +1,15 @@
 #include "Rook.h"
-Rook::Rook(int a,int b,char x):Chessman(a,b,x)
+Rook::Rook(sf::Vector2i pos,sf::RenderWindow *s,char x):Chessman(pos,s,x)
 {   
+    if(x=='w')
+    {
+        texture.loadFromFile("/Users/Taylor1989/Desktop/advancedchess/project/White/Rook.png");
+    }
+    else
+    {
+        texture.loadFromFile("/Users/Taylor1989/Desktop/advancedchess/project/Black/Rook.png");
+    }
+    TextureSprite.setTexture(texture);
 }
 bool Rook::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cell *cellBoard[8][8])
 {
