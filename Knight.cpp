@@ -1,6 +1,15 @@
 #include "Knight.h"
-Knight::Knight(int a,int b,char x):Chessman(a,b,x)
-{   
+Knight::Knight(sf::Vector2i pos,sf::RenderWindow * s,char x):Chessman(pos,s,x)
+{
+    if(x=='w')
+    {
+        texture.loadFromFile("/Users/Taylor1989/Desktop/advancedchess/project/White/Knight.png");
+    }
+    else
+    {
+        texture.loadFromFile("/Users/Taylor1989/Desktop/advancedchess/project/Black/Knight.png");
+    }
+    TextureSprite.setTexture(texture);
 }
 bool Knight::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cell *cellBoard[8][8])
 {
@@ -19,6 +28,9 @@ bool Knight::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,C
             return true;
         }
     }
-    return false;
-	
+    return false;	
+}
+Knight::~Knight()
+{
+
 }
