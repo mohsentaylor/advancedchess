@@ -20,37 +20,15 @@ Player2::Player2(sf::RenderWindow *window)
     pawn6=new Pawn(sf::Vector2i(5,6),window,'b');
     pawn7=new Pawn(sf::Vector2i(6,6),window,'b');
     pawn8=new Pawn(sf::Vector2i(7,6),window,'b');
-    pieces.push_back(queen );
-    pieces.push_back(king );
-    pieces.push_back(rook1 );
-    pieces.push_back(rook2 );
-    pieces.push_back(knight1 );
-    pieces.push_back(knight2);
-    pieces.push_back(bishop1);
-    pieces.push_back(bishop2);
-    pieces.push_back(pawn1);
-    pieces.push_back(pawn2);
-    pieces.push_back(pawn3);
-    pieces.push_back(pawn4);
-    pieces.push_back(pawn5);
-    pieces.push_back(pawn6);
-    pieces.push_back(pawn7);
-    pieces.push_back(pawn8);
     this->window=window;
 }
-void Player2::SetName(std::string name)
-{
-    this->name=name;
-}
-std::string Player2::GetName()
-{
-    return name;
-}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Player2::AddPoint(unsigned int a)
 {
     point+=a;
 }
-unsigned int Player2::GetPoint()
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int Player2::GetPoint()
 {
     return point;
 }
@@ -58,10 +36,12 @@ void Player2::AddNPoint(int a)
 {
     negativepoint+=a;
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 short int Player2::GetNPoint()
 {
     return negativepoint;
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Player2::~Player2()
 {
     delete king;
@@ -80,8 +60,4 @@ Player2::~Player2()
     delete pawn6;
     delete pawn7;
     delete pawn8;
-}
-std::vector <Chessman *>&Player2::getPieces()
-{
-    return pieces;
 }

@@ -14,6 +14,7 @@ Knight::Knight(sf::Vector2i pos,sf::RenderWindow * s,char x):Chessman(pos,s,x)
     }
     TextureSprite.setTexture(texture);
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool Knight::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cell *cellBoard[8][8])
 {
     // Destination square is unoccupied or occupied by opposite color
@@ -33,6 +34,7 @@ bool Knight::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,C
     }
     return false;	
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Knight::~Knight()
 {
 

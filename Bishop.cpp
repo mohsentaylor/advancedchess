@@ -14,6 +14,7 @@ Bishop::Bishop(sf::Vector2i pos,sf::RenderWindow* s,char x):Chessman(pos,s,x)
     }
     TextureSprite.setTexture(texture);
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool Bishop::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cell *cellBoard[8][8])
 {
     if ((iDestCol - iSrcCol == iDestRow - iSrcRow) || (iDestCol - iSrcCol == iSrcRow - iDestRow))
@@ -34,7 +35,7 @@ bool Bishop::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,C
     }
     return false;
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Bishop::~Bishop()
 {
-
 }

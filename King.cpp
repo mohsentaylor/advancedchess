@@ -15,6 +15,7 @@ King::King(sf::Vector2i pos,sf::RenderWindow* s,char x):Chessman(pos,s,x)
     }
     TextureSprite.setTexture(texture);
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool King::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cell * cellBoard[8][8])
 {
     int iRowDelta = iDestRow - iSrcRow;
@@ -26,6 +27,7 @@ bool King::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cel
     }
     return false;	
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 King::~King()
 {
 

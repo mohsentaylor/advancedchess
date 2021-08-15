@@ -5,26 +5,23 @@
 ChessBoard::ChessBoard(sf::RenderWindow * window)
 {
     fnt.loadFromFile("London.ttf");
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     pl1pos.setFont(fnt);
-
     pl1pos.setFillColor(sf::Color::Blue);
     pl1pos.setPosition(1600,250);
-    ////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     pl1neg.setFont(fnt);
-
     pl1neg.setFillColor(sf::Color::Blue);
     pl1neg.setPosition(1600,350);
-    ////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     pl2pos.setFont(fnt);
-
     pl2pos.setFillColor(sf::Color::Red);
     pl2pos.setPosition(1600,450);
-    /////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     pl2neg.setFont(fnt);
-
     pl2neg.setFillColor(sf::Color::Red);
     pl2neg.setPosition(1600,550);
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     sf::Image image;
     if (!(image.loadFromFile("gamepics/ChessBoard.jpg")))
     {
@@ -34,15 +31,20 @@ ChessBoard::ChessBoard(sf::RenderWindow * window)
     boardsprite.setTexture(boardtxt);
     boardsprite.setScale(0.65f,0.65f);
     boardsprite.setPosition(600,100);
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     this->window=window;
     pl1=new Player1(this->window);
     pl2=new Player2(this->window);
-    //set pl1 nuts
-    for (int i=0; i<8 ; i++) {
-        for (int j=0;j<8; j++) {
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    for (int i=0; i<8 ; i++)
+    {
+        for (int j=0;j<8; j++)
+        {
             cells[i][j] = new Cell();
         }
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //set pl1 nuts
     cells[4][0]->SetNut(pl1->queen);
     cells[3][0]->SetNut(pl1->king);
     cells[0][0]->SetNut(pl1->rook1);
@@ -59,6 +61,7 @@ ChessBoard::ChessBoard(sf::RenderWindow * window)
     cells[5][1]->SetNut(pl1->pawn6);
     cells[6][1]->SetNut(pl1->pawn7);
     cells[7][1]->SetNut(pl1->pawn8);
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //set pl2 nuts
     cells[4][7]->SetNut(pl2->queen);
     cells[3][7]->SetNut(pl2->king);
@@ -77,18 +80,14 @@ ChessBoard::ChessBoard(sf::RenderWindow * window)
     cells[6][6]->SetNut(pl2->pawn7);
     cells[7][6]->SetNut(pl2->pawn8);
 }
-void ChessBoard::SetPlNames(std::string a,std::string b)
-{
-    pl1->SetName(a);
-    pl2->SetName(b);
-}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void ChessBoard::ChangeTurn()
 {
    plturn = (plturn == 'w') ? 'b' : 'w';
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 std::string ChessBoard::switchname(std::string s)
 {
-    std::string x;
     x[0]=s[0];
     x[1]=s[3];
     x[2]=s[4];
@@ -96,6 +95,7 @@ std::string ChessBoard::switchname(std::string s)
     x[4]=s[2];
     return x;
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void ChessBoard::Moveit(int a,int b,int c, int d)
 {
     cells[c][d]->SetNut(cells[a][b]->ptr);
@@ -182,28 +182,42 @@ void ChessBoard::Moveit(int a,int b,int c, int d)
             }
         }
     }
-    if(Twomovement)
+//    if(Twomovement)
+//    {
+//        if(plturn == 'w')
+//        {
+//            pl1->AddNPoint(-30);
+//        }
+//        else
+//        {
+//            pl2->AddNPoint(-30);
+//        }
+//    }
+//    else
+//    {
+//        ChangeTurn();
+//    }
+    if(pl1->GetNPoint()<-15)
     {
-        if(plturn == 'w')
-        {
-            pl1->AddNPoint(-30);
-        }
-        else
-        {
-            pl2->AddNPoint(-30);
-        }
+        throw std::runtime_error("pl1 has so much negetive point");
+        pl1->AddNPoint(+15);
     }
-    else
+    if(pl2->GetNPoint()<-15)
     {
-        ChangeTurn();
+        throw std::runtime_error("pl1 has so much negetive point");
+        pl2->AddNPoint(+15);
     }
+    ChangeTurn();
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void ChessBoard::attack(int a, int b, int c, int d)
 {
+    // not killing king
     if(cells[c][d]->ptr->GetNamad()=='K')
     {
         throw std::runtime_error("you cant kill the king :)");
     }
+    //calculate points of killing and add to player
     if(cells[c][d]->ptr->GetColor()=='w')
     {
         pl2->AddPoint(cells[c][d]->ptr->GetPoint());
@@ -214,12 +228,13 @@ void ChessBoard::attack(int a, int b, int c, int d)
         pl1->AddPoint(cells[c][d]->ptr->GetPoint());
         pl2->graveyard.push_back(cells[c][d]->ptr);
     }
+    //take peice to the out of gameboard
     cells[c][d]->ptr->SetInGame(false);
     cells[c][d]->ptr=nullptr;
     Moveit(a,b,c,d);
 
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool ChessBoard::KingCheck(char cColor)
 {
     // Find the king
@@ -260,6 +275,7 @@ bool ChessBoard::KingCheck(char cColor)
     }
     return false;
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool ChessBoard::GameOver()
 {
     // Run through all pieces
@@ -312,8 +328,26 @@ bool ChessBoard::GameOver()
     }
     return false;
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void ChessBoard::movePiece(std::string move)
 {
+    if(plturn=='w')
+    {
+        if(move==pl1->lastmove)
+        {
+            pl1->AddNPoint(-1);
+        }
+        pl1->lastmove=switchname(move);
+    }
+    else if(plturn=='b')
+    {
+        if(move==pl2->lastmove)
+        {
+            pl2->AddNPoint(-1);
+        }
+                pl2->lastmove=switchname(move);
+    }
+
     int a,b,c,d;
     b=int(move[2])-'0';
     b=fabs(b-9);
@@ -377,62 +411,71 @@ void ChessBoard::movePiece(std::string move)
     b--;
     c--;
     d--;
-//    if(move=="Kd1a1")
-//    {
-//        if(!(cells[a-1][b-1]->ptr->DidMove)&&(cells[c-1][d-1]->ptr->DidMove))
-//        {
-//            if(!(cells[1][7]->ptr==0)&&!(cells[2][7]->ptr==0))
-//            {
-//                if(cells[c-1][d-1]->ptr->GetNamad()=='R')
-//                {
-//                    Moveit(a-1,b-1,c-1,d-2);
-//                    Moveit(c-1,d-1,a-1,b-2);
-//                }
-//            }
-//        }
-//    }
-//    if(move=="Kd1h1")
-//    {
-//        if(!(cells[a-1][b-1]->ptr->DidMove)&&(cells[c-1][d-1]->ptr->DidMove))
-//        {
-//            if((!(cells[4][7]->ptr==0)&&!(cells[5][7]->ptr==0))&&cells[6][7]->ptr==0)
-//            {
-//                if(cells[c-1][d-1]->ptr->GetNamad()=='R')
-//                {
-//                    Moveit(a-1,b-1,c-1,d-2);
-//                    Moveit(c-1,d-1,a-1,b-3);
-//                }
-//            }
-//        }
-//    }
-//    if(move=="Kd8a8")
-//    {
-//        if(!(cells[a-1][b-1]->ptr->DidMove)&&(cells[c-1][d-1]->ptr->DidMove))
-//        {
-//            if(!(cells[1][0]->ptr==0)&&!(cells[2][0]->ptr==0))
-//            {
-//                if(cells[c-1][d-1]->ptr->GetNamad()=='R')
-//                {
-//                    Moveit(a-1,b-1,c-1,d-2);
-//                    Moveit(c-1,d-1,a-1,b-2);
-//                }
-//            }
-//        }
-//    }
-//    if(move=="Kd8h8")
-//    {
-//        if(!(cells[a-1][b-1]->ptr->DidMove)&&(cells[c-1][d-1]->ptr->DidMove))
-//        {
-//            if((!(cells[4][7]->ptr==0)&&!(cells[5][7]->ptr==0))&&cells[6][7]->ptr==0)
-//            {
-//                if(cells[c-1][d-1]->ptr->GetNamad()=='R')
-//                {
-//                    Moveit(a-1,b-1,c-1,d-2);
-//                    Moveit(c-1,d-1,a-1,b-3);
-//                }
-//            }
-//        }
-//    }
+    if(move=="Kd1a1")
+    {
+        if(!(cells[a][b]->ptr->DidMove)&&(cells[c][d]->ptr->DidMove))
+        {
+            if((cells[1][7]->IsEmpty())&&(cells[2][7]->IsEmpty()))
+            {
+                if(cells[c][d]->ptr->GetNamad()=='R')
+                {
+                    Moveit(a,b,c,d-1);
+                    Moveit(c,d,a,b-1);
+                    ChangeTurn();
+                    return;
+
+                }
+            }
+        }
+    }
+    if(move=="Kd1h1")
+    {
+        if(!(cells[a][b]->ptr->DidMove)&&(cells[c][d]->ptr->DidMove))
+        {
+            if(((cells[4][7]->IsEmpty())&&(cells[5][7]->IsEmpty()))&&cells[6][7]->IsEmpty())
+            {
+                if(cells[c][d]->ptr->GetNamad()=='R')
+                {
+                    Moveit(a,b,c,d-1);
+                    Moveit(c,d,a,b-2);
+                    ChangeTurn();
+                    return;
+                }
+            }
+        }
+    }
+    if(move=="Kd8a8")
+    {
+        if(!(cells[a][b]->ptr->DidMove)&&(cells[c][d]->ptr->DidMove))
+        {
+            if((cells[1][0]->IsEmpty())&&(cells[2][0]->IsEmpty()))
+            {
+                if(cells[c][d]->ptr->GetNamad()=='R')
+                {
+                    Moveit(a,b,c,d-1);
+                    Moveit(c,d,a,b-1);
+                    ChangeTurn();
+                    return;
+                }
+            }
+        }
+    }
+    if(move=="Kd8h8")
+    {
+        if(!(cells[a][b]->ptr->DidMove)&&(cells[c][d]->ptr->DidMove))
+        {
+            if(((cells[4][7]->IsEmpty())&&(cells[5][7]->IsEmpty()))&&cells[6][7]->IsEmpty())
+            {
+                if(cells[c][d]->ptr->GetNamad()=='R')
+                {
+                    Moveit(a,b,c,d-1);
+                    Moveit(c,d,a,b-2);
+                    ChangeTurn();
+                    return;
+                }
+            }
+        }
+    }
     if(cells[a][b]->ptr->AreSquaresLegal(a,b,c,d,cells))
     {
         if(plturn=='w')
@@ -477,7 +520,7 @@ void ChessBoard::movePiece(std::string move)
 //        sf::Text endgame;
 //        endgame.setFont(fnt);
 //        endgame.setFillColor(sf::Color::Yellow);
-//        endgame.setPosition(600,950);
+//        endgame.setPosition(600,50);
 //        if(pl1->GetPoint()>pl2->GetPoint())
 //        {
 //            endgame.setString(pl1->GetName()+"won with"+std::to_string(pl1->GetPoint())+"point");
@@ -489,6 +532,7 @@ void ChessBoard::movePiece(std::string move)
 //        window->draw(endgame);
 //    }
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void ChessBoard::transformator(sf::Vector2f pos1,sf::Vector2f pos2)
 {
     char a=0;
@@ -552,7 +596,7 @@ void ChessBoard::transformator(sf::Vector2f pos1,sf::Vector2f pos2)
     {
         throw std::runtime_error("not choose a piece in first pos in transformator");
     }
-    ////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
     bool find=false;
     for (int i = 0; i < 8; i++)
     {
@@ -664,10 +708,11 @@ void ChessBoard::transformator(sf::Vector2f pos1,sf::Vector2f pos2)
     std::string name22(concattedString);
     movePiece(name22);
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool ChessBoard::CheckIsPiece(sf::Vector2f pos)
 {
     int x,y;
+    //find i in cells[i][j](width)
     for (int i = 0; i < 8; i++)
     {
         if (((float)(i*(125)*(0.675)+600))<pos.x)
@@ -678,6 +723,7 @@ bool ChessBoard::CheckIsPiece(sf::Vector2f pos)
             }
         }
     }
+    //find j in cells[i][j](length)
     for (int i = 0; i < 8; i++)
     {
         if (((float)(i*(125)*(0.675)+100))<pos.y)
@@ -694,8 +740,10 @@ bool ChessBoard::CheckIsPiece(sf::Vector2f pos)
     }
     return false;
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void ChessBoard::draw()
 {
+    //drawing pieces that exist in the game(not killed)
     boardsprite.setTexture(boardtxt);
     boardsprite.setScale(0.65f,0.65f);
     boardsprite.setPosition(600,100);
@@ -710,25 +758,53 @@ void ChessBoard::draw()
             }
         }
     }
-    pl1pos.setString(std::to_string(pl1->GetPoint()));
-    pl1neg.setString(std::to_string(pl1->GetNPoint()));
-    pl2pos.setString(std::to_string( pl2->GetPoint()));
-    pl2neg.setString(std::to_string( pl2->GetNPoint()));
-    if (!pl1->graveyard.empty())
-    {
-        for(auto i:pl1->graveyard)
-        {
-            i->
-        }
-    }
-    else {
-
-    }
+    //drawing + and - points of two players
+    pl1pos.setString("                  "+std::to_string(pl1->GetPoint()));
+    pl1neg.setString("                  "+std::to_string(pl1->GetNPoint()));
+    pl2pos.setString("                  "+std::to_string( pl2->GetPoint()));
+    pl2neg.setString("                  "+std::to_string( pl2->GetNPoint()));
     window->draw(pl1pos);
     window->draw(pl1neg);
     window->draw(pl2pos);
     window->draw(pl2neg);
+    //make background for dead peices
+    sf::RectangleShape rectangle1;
+    rectangle1.setFillColor(sf::Color::Black);
+    rectangle1.setSize(sf::Vector2f(1270,85));
+    rectangle1.setPosition(600,777);
+    window->draw(rectangle1);
+    ///////////////////////////////////////////////////////////////////////////////////////
+    sf::RectangleShape rectangle2;
+    rectangle2.setFillColor(sf::Color::White);
+    rectangle2.setSize(sf::Vector2f(1270,85));
+    rectangle2.setPosition(600,865);
+    window->draw(rectangle2);
+    ////////////////////////////////////////////////////////////////////////////////////////
+    if (!pl1->graveyard.empty())
+    {
+        for(unsigned int i=0; i<pl1->graveyard.size(); i++)
+        {
+            pl1->graveyard[i]->GetTextureSprite().setPosition(float((((i)*(125)*(0.675))+600)),float(775));
+            window->draw(pl1->graveyard[i]->GetTextureSprite());
+        }
+    }
+    if (!pl2->graveyard.empty())
+    {
+        for(unsigned int i=0; i<pl2->graveyard.size(); i++)
+        {
+            pl2->graveyard[i]->GetTextureSprite().setPosition(float((((i)*(125)*(0.675))+600)),float(865));
+            window->draw(pl2->graveyard[i]->GetTextureSprite());
+        }
+    }
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ChessBoard::~ChessBoard()
 {
+    for(int i=0;i<8;i++)
+    {
+        for(int j=0;j<8;j++)
+        {
+            delete cells[i][j];
+        }
+    }
 }

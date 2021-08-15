@@ -20,7 +20,7 @@ class Chessman
         Chessman(sf::Vector2i,sf::RenderWindow* ,char);
         Chessman();
         ~Chessman();
-        sf::Vector2i PosOnGrid;
+        sf::Vector2i PosOnGrid;//position of piece in gameboard
         bool IsLegalMove(int iSrcRow, int iSrcCol, int iDestRow, int iDestCol, Cell* [8][8]);//can go that point(is that place empty or enemy)
         virtual bool AreSquaresLegal(int a,int  b,int c,int  d ,Cell* [8][8]) = 0;//based on types of pieces
         //void SetParameter(int a,int,char);
@@ -31,7 +31,7 @@ class Chessman
         int GetPoint();
         int GetWarn();
         bool DidMove;//is this piece move or not
-        virtual void draw();
+        virtual void draw();//drawing each piece on gameboard according to PosOnGrid
         virtual sf::Sprite& GetTextureSprite();
         sf::Vector2i GetPosOnGrid() ;
 };

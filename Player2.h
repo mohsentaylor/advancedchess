@@ -11,20 +11,18 @@
 class Player2
 {
     private:
-        std::string name;
-        unsigned int point;
-        short int negativepoint;
+        int point;//posetive point of player
+        short int negativepoint;//negative point of player
         sf::RenderWindow * window;
-        std::vector<Chessman*>& getPieces();
 
     public:
         Player2(sf::RenderWindow*);
-        void SetName(std::string);
-        std::string GetName();
         void AddPoint(unsigned int);
-        unsigned int GetPoint();
+        int GetPoint();
         void AddNPoint(int);
         short int GetNPoint();
+        std::string lastmove;
+        ///////////
         Queen * queen;
         King * king;
         Rook * rook1;
@@ -41,9 +39,10 @@ class Player2
         Pawn * pawn6;
         Pawn * pawn7;
         Pawn * pawn8;
+        ///////////
         std::vector <std::string>stack;
         std::vector <Chessman*> graveyard;
-        std::vector <Chessman *>pieces;
+     // std::vector <Chessman *>pieces;
         ~Player2();
 };
 
