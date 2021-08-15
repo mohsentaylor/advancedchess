@@ -12,8 +12,8 @@ class Player1
 {
     private:
         std::string name;
-        unsigned int point=0;
-        short int negativepoint=0;
+        unsigned int point;
+        short int negativepoint;
         sf::RenderWindow * window;
         std::vector<Chessman*>& getPieces();
     public:

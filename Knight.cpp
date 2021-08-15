@@ -1,13 +1,16 @@
 #include "Knight.h"
 Knight::Knight(sf::Vector2i pos,sf::RenderWindow * s,char x):Chessman(pos,s,x)
 {
+    namad='H';
+    warn=2;
+    point=8;
     if(x=='w')
     {
-        texture.loadFromFile("/Users/Taylor1989/Desktop/advancedchess/project/White/Knight.png");
+        texture.loadFromFile("White/Knight.png");
     }
     else
     {
-        texture.loadFromFile("/Users/Taylor1989/Desktop/advancedchess/project/Black/Knight.png");
+        texture.loadFromFile("Black/Knight.png");
     }
     TextureSprite.setTexture(texture);
 }

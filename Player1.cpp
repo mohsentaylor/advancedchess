@@ -2,22 +2,24 @@
 #include <string>
 Player1::Player1(sf::RenderWindow * window)
 {
-    queen =new Queen(sf::Vector2i(0,4),window,'w');
-    king=new King(sf::Vector2i(0,3),window,'w');
+    point=0;
+    negativepoint=0;
+    queen =new Queen(sf::Vector2i(4,0),window,'w');
+    king=new King(sf::Vector2i(3,0),window,'w');
     rook1=new Rook(sf::Vector2i(0,0),window,'w');
-    rook2=new Rook(sf::Vector2i(0,7),window,'w');
-    knight1=new Knight(sf::Vector2i(0,1),window,'w');
-    knight2=new Knight(sf::Vector2i(0,6),window,'w');
-    bishop1=new Bishop(sf::Vector2i(0,2),window,'w');
-    bishop2=new Bishop(sf::Vector2i(0,5),window,'w');
-    pawn1=new Pawn(sf::Vector2i(1,0),window,'w');
+    rook2=new Rook(sf::Vector2i(7,0),window,'w');
+    knight1=new Knight(sf::Vector2i(1,0),window,'w');
+    knight2=new Knight(sf::Vector2i(6,0),window,'w');
+    bishop1=new Bishop(sf::Vector2i(2,0),window,'w');
+    bishop2=new Bishop(sf::Vector2i(5,0),window,'w');
+    pawn1=new Pawn(sf::Vector2i(0,1),window,'w');
     pawn2=new Pawn(sf::Vector2i(1,1),window,'w');
-    pawn3=new Pawn(sf::Vector2i(1,2),window,'w');
-    pawn4=new Pawn(sf::Vector2i(1,3),window,'w');
-    pawn5=new Pawn(sf::Vector2i(1,4),window,'w');
-    pawn6=new Pawn(sf::Vector2i(1,5),window,'w');
-    pawn7=new Pawn(sf::Vector2i(1,6),window,'w');
-    pawn8=new Pawn(sf::Vector2i(1,7),window,'w');
+    pawn3=new Pawn(sf::Vector2i(2,1),window,'w');
+    pawn4=new Pawn(sf::Vector2i(3,1),window,'w');
+    pawn5=new Pawn(sf::Vector2i(4,1),window,'w');
+    pawn6=new Pawn(sf::Vector2i(5,1),window,'w');
+    pawn7=new Pawn(sf::Vector2i(6,1),window,'w');
+    pawn8=new Pawn(sf::Vector2i(7,1),window,'w');
     pieces.push_back(queen );
     pieces.push_back(king );
     pieces.push_back(rook1 );

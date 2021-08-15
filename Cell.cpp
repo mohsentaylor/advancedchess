@@ -14,3 +14,7 @@ void Cell::SetNut(Chessman* x)
 {
     ptr=x;
 }
+
+Cell::Cell()
+{
+}

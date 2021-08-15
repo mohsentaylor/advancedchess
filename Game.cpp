@@ -1,40 +1,66 @@
 #include "Game.h"
-Game::Game(std::string name)
+Game::Game(sf::RenderWindow * window)
 {
-    gamename=name;
-    std::string pl1,pl2;
-    std::cout<<"enter 1th player name:";
-    getline(std::cin,pl1);
-    std::cout<<"enter 2th player name:";
-    getline(std::cin,pl2);
-    GameBoard.SetPlNames(pl1,pl2);
+    this->window=window;
+    GameBoard=new ChessBoard(window);
+    SetName(GetInput());
+    pl1=GetInput();
+    pl2=GetInput();
+    GameBoard->SetPlNames(pl1,pl2);
 }
-bool IsGameOver() {
-    // Check that the current player can move
-    // If not, we have a stalemate or checkmate
-    bool bCanMove(false);
-    bCanMove = GameBoard.CanMove(mcPlayerTurn);
-    if (!bCanMove) {
-        if (mqGameBoard.IsInCheck(mcPlayerTurn)) {
-            AlternateTurn();
-            std::cout << "Checkmate, " << mcPlayerTurn << " Wins!" << std::endl;
-        } else {
-            std::cout << "Stalemate!" << std::endl;
-        }
-    }
-    return !bCanMove;
-}
-void Start()
+void Game::SetName(std::string name)
 {
-        do {
-            GetNextMove(GameBoard.paaBoard);
-            AlternateTurn();
-        } while (!IsGameOver());
-        mqGameBoard.Print();
+     gamename=name;
 }
-void AlternateTurn() {
-        mcPlayerTurn = (mcPlayerTurn == 'W') ? 'B' : 'W';
+std::string Game::GetName()
+{
+    return gamename;
+}
+std::string Game::GetInput()
+{
+    std::string str;
+     sf::RenderWindow window1({ 640 ,480 }, "enter name of game");
+    if(count==0)
+    {
+
     }
+    if(count==1)
+    {
+        window1.setTitle("enter name of player1");
+    }
+    if(count==2)
+    {
+       window1.setTitle("enter name of player2");
+    }
+    count++;
+    sf::Font font;
+    font.loadFromFile("London.ttf");
+    sf::Text text("", font);
+    while (window1.isOpen())
+    {
+       sf::Event event;
+       while (window1.pollEvent(event))
+       {
+           if (event.type == sf::Event::Closed)
+               window1.close();
+           if (event.type == sf::Event::TextEntered)
+           {
+               // Handle ASCII characters only
+               if (event.text.unicode < 128)
+               {
+                   str += static_cast<char>(event.text.unicode);
+                   text.setString(str);
+               }
+           }
+
+       }
+       window1.clear();
+       window1.draw(text);
+       window1.display();
+   }
+    return str;
+}
 Game::~Game()
 {
+    delete GameBoard;
 }
