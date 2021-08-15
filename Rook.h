@@ -4,15 +4,14 @@
 class Rook:public Chessman
 {
     public:
-        Rook(int,int,char);
-        Rook() {}
-        bool DidMove = false;
+        Rook(sf::Vector2i,sf::RenderWindow *,char);
+        Rook();
+        virtual ~Rook();
     protected:
-        char namad='R';
-        int warn=2;
-        int point=8;
-        bool AreSquaresLegal(int,int,int,int,Cell *[8][8]);
+        bool AreSquaresLegal(int,int,int,int,Cell *[8][8]) override;
 };
 
     
 #endif
+
+///////////////////////////////////////////////////////////////////////

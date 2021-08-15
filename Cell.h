@@ -1,6 +1,7 @@
 #ifndef CELL_H
 #define CELL_H
 #include <iostream>
+#include <SFML/Graphics.hpp>
 class Chessman;
 class Cell
 {
@@ -11,3 +12,6 @@ class Cell
         void SetNut(Chessman *);
 };
 #endif
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////

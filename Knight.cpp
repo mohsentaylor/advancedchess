@@ -1,7 +1,20 @@
 #include "Knight.h"
-Knight::Knight(int a,int b,char x):Chessman(a,b,x)
-{   
+Knight::Knight(sf::Vector2i pos,sf::RenderWindow * s,char x):Chessman(pos,s,x)
+{
+    namad='H';
+    warn=2;
+    point=8;
+    if(x=='w')
+    {
+        texture.loadFromFile("White/Knight.png");
+    }
+    else
+    {
+        texture.loadFromFile("Black/Knight.png");
+    }
+    TextureSprite.setTexture(texture);
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool Knight::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cell *cellBoard[8][8])
 {
     // Destination square is unoccupied or occupied by opposite color
@@ -19,6 +32,13 @@ bool Knight::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,C
             return true;
         }
     }
-    return false;
-	
+    return false;	
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Knight::~Knight()
+{
+
+}
+
+///////////////////////////////////////////////////////////////////////

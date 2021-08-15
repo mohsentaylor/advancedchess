@@ -1,7 +1,21 @@
 #include "Bishop.h"
-Bishop::Bishop(int a,int b,char x):Chessman(a,b,x)
-{   
+Bishop::Bishop(sf::Vector2i pos,sf::RenderWindow* s,char x):Chessman(pos,s,x)
+{
+    namad='B';
+    warn=2;
+    point=8;
+    if(x=='w')
+    {
+        texture.loadFromFile("White/Bishop.png");
+    }
+    else
+    {
+        texture.loadFromFile("Black/Bishop.png");
+    }
+    TextureSprite.setTexture(texture);
 }
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 bool Bishop::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,Cell *cellBoard[8][8])
 {
     if ((iDestCol - iSrcCol == iDestRow - iSrcRow) || (iDestCol - iSrcCol == iSrcRow - iDestRow))
@@ -11,9 +25,9 @@ bool Bishop::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,C
         int iColOffset = (iDestCol - iSrcCol > 0) ? 1 : -1;
         int iCheckRow;
         int iCheckCol;
-        for (iCheckRow = iSrcRow + iRowOffset, iCheckCol = iSrcCol + iColOffset;iCheckRow !=  iDestRow;iCheckRow = iCheckRow + iRowOffset, iCheckCol = iCheckCol + iColOffset)
+        for (iCheckRow = iSrcRow + iRowOffset, iCheckCol = iSrcCol + iColOffset;iCheckRow !=  iDestRow && iCheckRow >= 0 && iCheckRow < 8 && iCheckCol >= 0 && iCheckCol < 8;iCheckRow = iCheckRow + iRowOffset, iCheckCol = iCheckCol + iColOffset)
         {
-            if (cellBoard[iCheckRow][iCheckCol] != 0)
+            if ( !cellBoard[iCheckRow][iCheckCol]->IsEmpty())
             {
                 return false;
             }
@@ -22,4 +36,8 @@ bool Bishop::AreSquaresLegal(int iSrcRow,int iSrcCol,int iDestRow,int iDestCol,C
     }
     return false;
 }
-
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+Bishop::~Bishop()
+{
+}
